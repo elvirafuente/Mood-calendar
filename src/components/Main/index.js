@@ -2,13 +2,20 @@ import React from 'react';
 import './styles.scss';
 import EditPage from '../EditPage';
 import CalendarPage from '../CalendarPage';
+// import { Route, Switch } from 'react-router-dom';
 
 
-function Main() {
+
+function Main(props) {
+  const { methodGetInput, state } = props;
+
   return (
     <main>
       main
-      <EditPage />
+      <EditPage 
+        methodGetInput={methodGetInput}
+        state={state}
+      />
       <CalendarPage />
     </main>
   );
