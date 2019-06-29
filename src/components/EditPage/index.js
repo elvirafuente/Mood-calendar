@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import './styles.scss';
 
 function EditPage(props) {
-  const { methodGetInput, state } = props;
+  const { methodGetInput, state, methodSaveObject } = props;
 
   return (
     <Fragment>
@@ -12,8 +12,6 @@ function EditPage(props) {
           <input 
             type="date" 
             id="date"
-            min="2019-01-01" 
-            max="2019-12-31"
             name="date"
             required
             onChange={methodGetInput}
@@ -42,7 +40,7 @@ function EditPage(props) {
               {`:( Sad`}
             </label>
         </fieldset>
-        {state.mood === 'happy' 
+        {state.inputData.mood === 'happy' 
           ?
           <fieldset>
             <label htmlFor="message">Message</label>
@@ -51,6 +49,7 @@ function EditPage(props) {
               id="message"
               name="message"
               onChange={methodGetInput}
+              value={state.message}
             />
           </fieldset>
         :
@@ -60,9 +59,11 @@ function EditPage(props) {
             type="submit" 
             id="submit" 
             value="Guardar"
+            onClick={methodSaveObject}
           />
         </fieldset>
       </form>
+      <p>{state.feedBack}</p>
     </Fragment>
   );
 }

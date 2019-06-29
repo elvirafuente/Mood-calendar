@@ -7,7 +7,7 @@ import CalendarPage from '../CalendarPage';
 
 
 function Main(props) {
-  const { methodGetInput, state } = props;
+  const { methodGetInput, state, methodSaveObject } = props;
 
   return (
     <main>
@@ -15,6 +15,7 @@ function Main(props) {
       <EditPage 
         methodGetInput={methodGetInput}
         state={state}
+        methodSaveObject={methodSaveObject}
       />
       <CalendarPage />
     </main>
