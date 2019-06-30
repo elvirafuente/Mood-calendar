@@ -15,7 +15,7 @@ function EditPage(props) {
             name="date"
             required
             onChange={methodGetInput}
-            
+            value={state.inputData.date}
           />
         </fieldset>
         <fieldset>
@@ -25,7 +25,9 @@ function EditPage(props) {
                 type="radio"
                 value="happy"
                 name="mood"
+                checked={state.inputData.mood.includes('happy')}
                 onChange={methodGetInput}
+
               />
               {`:) Happy`}
             </label>
@@ -35,6 +37,7 @@ function EditPage(props) {
                 type="radio"
                 value="sad"
                 name="mood"
+                checked={state.inputData.mood.includes('sad')}
                 onChange={methodGetInput}
               />
               {`:( Sad`}

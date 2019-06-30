@@ -40,11 +40,11 @@ class CalendarApp extends Component {
 
   saveObject(event) {
     event.preventDefault();
-
+    
     if (!this.state.inputData.mood || !this.state.inputData.date) {
-      this.setState({
-        feedBack: 'Fill out all form fields, please'
-      })
+      this.writeFeedback('Fill out all form fields, please');
+    } else if( this.compareArrayDates() !== -1 ){  
+        this.writeFeedback('Sorry, but the date that you checked has beeen already saved')
     } else {
       this.setState(prevState => {
         return {
@@ -55,7 +55,7 @@ class CalendarApp extends Component {
         }
       })
       this.resetInputData();
-      this.resetFeedBack();
+      this.writeFeedback('Your mood has been saved');
     }
   }
 
@@ -69,10 +69,17 @@ class CalendarApp extends Component {
     })
   }
 
-  resetFeedBack() {
+  writeFeedback(feedbackText){
     this.setState({
-      feedBack: '',
+      feedBack: feedbackText,
     })
+  }
+  
+  compareArrayDates(){
+    const { date } = this.state.inputData;
+    const { savedDates } = this.state;
+    const indexDate = savedDates.findIndex( savedDate => savedDate.date === date )
+    return indexDate
   }
 
 
