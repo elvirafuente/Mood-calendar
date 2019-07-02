@@ -9,7 +9,7 @@ class CalendarApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      savedDates: [],
+      savedDates: JSON.parse(localStorage.getItem('savedDates')) || [],
       inputData: {
         date: '',
         mood: '',
@@ -19,6 +19,7 @@ class CalendarApp extends Component {
     }
     this.getInput = this.getInput.bind(this);
     this.saveObject = this.saveObject.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   getInput(event) {
@@ -39,7 +40,7 @@ class CalendarApp extends Component {
   }
 
   saveObject(event) {
-    event.preventDefault();
+    // event.preventDefault();
     
     if (!this.state.inputData.mood || !this.state.inputData.date) {
       this.writeFeedback('Fill out all form fields, please');
@@ -55,7 +56,7 @@ class CalendarApp extends Component {
         }
       })
       this.resetInputData();
-      this.writeFeedback('Your mood has been saved');
+      // this.writeFeedback('Your mood has been saved');
     }
   }
 
@@ -82,6 +83,15 @@ class CalendarApp extends Component {
     return indexDate
   }
 
+  cancel(){
+    this.resetInputData();
+    this.writeFeedback('');
+
+  }
+
+  componentDidUpdate(){
+    localStorage.setItem('savedDates', JSON.stringify(this.state.savedDates));
+  }
 
   render() {
     return (
@@ -91,6 +101,7 @@ class CalendarApp extends Component {
           methodGetInput={this.getInput}
           state={this.state}
           methodSaveObject={this.saveObject}
+          methodCancel={this.cancel}
         />
         <Footer />
       </Fragment>

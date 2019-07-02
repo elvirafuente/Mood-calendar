@@ -1,15 +1,18 @@
 import React, {Fragment} from 'react';
 import './styles.scss';
+import { Link } from 'react-router-dom';
 
 function EditPage(props) {
-  const { methodGetInput, state, methodSaveObject } = props;
+  const { methodGetInput, state, methodSaveObject, methodCancel } = props;
 
   return (
     <Fragment>
-      <form>
-        <fieldset>
-          <label htmlFor="date">Choose a date</label>
+      <form className="main__form">
+        <h2 className="main__title">Edit mood ^___^</h2>
+        <fieldset className="form__fieldset">
+          <label htmlFor="date" className="fieldset__title">Choose a date</label>
           <input 
+            className="form__input--date"
             type="date" 
             id="date"
             name="date"
@@ -18,8 +21,9 @@ function EditPage(props) {
             value={state.inputData.date}
           />
         </fieldset>
-        <fieldset>
-          <label htmlFor="happy">
+        <fieldset className="fieldset__check">
+          <legend className="fieldset__title">Choose your mood</legend>
+          <label htmlFor="happy" className="form__input--radio">
               <input
                 id="happy"
                 type="radio"
@@ -31,7 +35,7 @@ function EditPage(props) {
               />
               {`:) Happy`}
             </label>
-            <label htmlFor="sad">
+            <label htmlFor="sad" className="form__input--radio">
               <input
                 id="sad"
                 type="radio"
@@ -45,9 +49,10 @@ function EditPage(props) {
         </fieldset>
         {state.inputData.mood === 'happy' 
           ?
-          <fieldset>
-            <label htmlFor="message">Message</label>
-            <input 
+          <fieldset className="form__fieldset">
+            <label htmlFor="message" className="fieldset__title">Message to remember</label>
+            <input
+              className="form__input--text"
               type="text" 
               id="message"
               name="message"
@@ -57,16 +62,44 @@ function EditPage(props) {
           </fieldset>
         :
         '' }
-        <fieldset>
-          <input 
-            type="submit" 
-            id="submit" 
-            value="Guardar"
-            onClick={methodSaveObject}
-          />
+        <p className="form__feedback">{state.feedBack}</p>
+        <fieldset className="form__fieldset">
+          {!state.inputData.date || !state.inputData.mood 
+            ?  
+            <button
+              className="form__input--button save" 
+              type="button" 
+              id="submit" 
+              onClick={methodSaveObject}
+            >
+              Save
+            </button>
+            : 
+            <Link to='/'>
+              <button
+                className="form__input--button save" 
+                type="button" 
+                id="submit" 
+                onClick={methodSaveObject}
+              >
+                Save
+              </button>
+            </Link>
+          }
+          
+          <Link to='/'>
+            <input
+              className="form__input--button cancel" 
+              type="button" 
+              id="cancel" 
+              value="Cancel"
+              onClick={methodCancel}
+            />
+          </Link>
         </fieldset>
+
       </form>
-      <p>{state.feedBack}</p>
+
     </Fragment>
   );
 }

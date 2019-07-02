@@ -3,8 +3,8 @@ import './styles.scss';
 
 function Footer() {
   return (
-    <footer>
-      footer
+    <footer className="page__footer">
+      mood calendar · Elvira Fuente · 2019
     </footer>
   );
 }
