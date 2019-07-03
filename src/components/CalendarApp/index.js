@@ -27,17 +27,32 @@ class CalendarApp extends Component {
     const { value } = event.target;
     const { name } = event.target;
     this.saveState(name, value);
+    this.checkDate(name, value);
+    // if(name === 'date'){
+    //   if(this.compareArrayDates(value) !== undefined){
+    //     this.setState({
+    //       alreadySaved: true,
+    //     });
+    //     this.writeFeedback('Sorry, but the date that you checked has been already saved');
+    //   } else {
+    //     this.setState({
+    //       alreadySaved: false,
+    //     });
+    //   }
+    // }
+  }
+
+  checkDate(name, value){
     if(name === 'date'){
-      if( this.compareArrayDates(value) !== undefined){
+      if(this.compareArrayDates(value) !== undefined){
         this.setState({
           alreadySaved: true,
-        })
-        this.writeFeedback('Sorry, but the date that you checked has beeen already saved')
+        });
+        this.writeFeedback('Sorry, but the date that you checked has been already saved');
       } else {
         this.setState({
           alreadySaved: false,
-        }) 
-        this.writeFeedback('')
+        });
       }
     }
   }
@@ -54,10 +69,13 @@ class CalendarApp extends Component {
   }
 
   saveObject() {
+    const { mood } = this.state.inputData;
+    const { date } = this.state.inputData;
 
-    if (!this.state.inputData.mood || !this.state.inputData.date) {
+    if (!mood || !date) {
       this.writeFeedback('Fill out all form fields, please');
-    
+    } else if(this.compareArrayDates(date) !== undefined ){
+      this.writeFeedback('Sorry, but the date that you checked has been already saved');
     } else {
       this.setState(prevState => {
         return {
@@ -67,12 +85,12 @@ class CalendarApp extends Component {
           ],
         }
       })
-      this.resetInputData();
+      this.resetStateData();
     }
   }
 
 
-  resetInputData() {
+  resetStateData() {
     this.setState({
       inputData: {
         date: '',
@@ -80,6 +98,7 @@ class CalendarApp extends Component {
         message: '',
       },
       alreadySaved:false,
+      message:'',
     })
   }
 
@@ -96,8 +115,10 @@ class CalendarApp extends Component {
     return indexDate
   }
 
+
+
   cancel(){
-    this.resetInputData();
+    this.resetStateData();
     this.writeFeedback('');
 
   }

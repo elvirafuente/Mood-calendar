@@ -57,7 +57,7 @@ function EditPage(props) {
               id="message"
               name="message"
               onChange={methodGetInput}
-              value={state.message}
+              value={state.inputData.message}
             />
           </fieldset>
         :
