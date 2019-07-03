@@ -64,7 +64,7 @@ function EditPage(props) {
         '' }
         <p className="form__feedback">{state.feedBack}</p>
         <fieldset className="form__fieldset">
-          {!state.inputData.date || !state.inputData.mood 
+          {!state.inputData.date || !state.inputData.mood ||state.alreadySaved === true
             ?  
             <button
               className="form__input--button save" 
@@ -75,15 +75,13 @@ function EditPage(props) {
               Save
             </button>
             : 
-            <Link to='/'>
-              <button
+            <Link to='/'
                 className="form__input--button save" 
                 type="button" 
                 id="submit" 
                 onClick={methodSaveObject}
               >
                 Save
-              </button>
             </Link>
           }
           

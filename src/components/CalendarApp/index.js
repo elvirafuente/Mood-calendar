@@ -15,7 +15,8 @@ class CalendarApp extends Component {
         mood: '',
         message: '',
       },
-      feedBack: ''
+      feedBack: '',
+      alreadySaved: false,
     }
     this.getInput = this.getInput.bind(this);
     this.saveObject = this.saveObject.bind(this);
@@ -26,6 +27,19 @@ class CalendarApp extends Component {
     const { value } = event.target;
     const { name } = event.target;
     this.saveState(name, value);
+    if(name === 'date'){
+      if( this.compareArrayDates(value) !== undefined){
+        this.setState({
+          alreadySaved: true,
+        })
+        this.writeFeedback('Sorry, but the date that you checked has beeen already saved')
+      } else {
+        this.setState({
+          alreadySaved: false,
+        }) 
+        this.writeFeedback('')
+      }
+    }
   }
 
   saveState(name, value) {
@@ -39,13 +53,11 @@ class CalendarApp extends Component {
     })
   }
 
-  saveObject(event) {
-    // event.preventDefault();
-    
+  saveObject() {
+
     if (!this.state.inputData.mood || !this.state.inputData.date) {
       this.writeFeedback('Fill out all form fields, please');
-    } else if( this.compareArrayDates() !== -1 ){  
-        this.writeFeedback('Sorry, but the date that you checked has beeen already saved')
+    
     } else {
       this.setState(prevState => {
         return {
@@ -56,9 +68,9 @@ class CalendarApp extends Component {
         }
       })
       this.resetInputData();
-      // this.writeFeedback('Your mood has been saved');
     }
   }
+
 
   resetInputData() {
     this.setState({
@@ -66,7 +78,8 @@ class CalendarApp extends Component {
         date: '',
         mood: '',
         message: '',
-      }
+      },
+      alreadySaved:false,
     })
   }
 
@@ -76,10 +89,10 @@ class CalendarApp extends Component {
     })
   }
   
-  compareArrayDates(){
-    const { date } = this.state.inputData;
+  compareArrayDates(date){
+    // const { date } = this.state.inputData;
     const { savedDates } = this.state;
-    const indexDate = savedDates.findIndex( savedDate => savedDate.date === date )
+    const indexDate = savedDates.find( savedDate => savedDate.date === date )
     return indexDate
   }
 
